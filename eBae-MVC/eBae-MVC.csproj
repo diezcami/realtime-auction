@@ -141,9 +141,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606300511096_InitialCreate.cs" />
-    <Compile Include="Migrations\201606300511096_InitialCreate.Designer.cs">
-      <DependentUpon>201606300511096_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201607040531314_init.cs" />
+    <Compile Include="Migrations\201607040531314_init.Designer.cs">
+      <DependentUpon>201607040531314_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bid.cs" />
@@ -269,13 +269,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606300511096_InitialCreate.resx">
-      <DependentUpon>201606300511096_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607040531314_init.resx">
+      <DependentUpon>201607040531314_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

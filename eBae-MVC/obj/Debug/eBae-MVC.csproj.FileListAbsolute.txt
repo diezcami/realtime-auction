@@ -30,8 +30,8 @@ C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\System.Web.WebPages.Deployment.xm
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\System.Web.WebPages.Razor.xml
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae-MVC.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae-MVC.pdb
-C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae_MVC.Migrations.InitialCreate.resources
-C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae-MVC.csproj.GenerateResource.Cache
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Owin.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Owin.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Owin.xml
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae_MVC.Migrations.init.resources
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae-MVC.csproj.GenerateResource.Cache

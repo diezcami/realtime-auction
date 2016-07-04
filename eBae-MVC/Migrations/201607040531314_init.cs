@@ -3,7 +3,7 @@ namespace eBae_MVC.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -25,7 +25,7 @@ namespace eBae_MVC.Migrations
             AddForeignKey("dbo.Bid", "UserID", "dbo.User", "UserID", cascadeDelete: true);
             AddForeignKey("dbo.Watch", "UserID", "dbo.User", "UserID", cascadeDelete: true);
             AddForeignKey("dbo.Watch", "ListingID", "dbo.Listing", "ListingID", cascadeDelete: true);
-            AddForeignKey("dbo.Listing", "UserID", "dbo.User", "UserID", cascadeDelete: true);
+            AddForeignKey("dbo.Listing", "UserID", "dbo.User", "UserID", cascadeDelete: false);
             AddForeignKey("dbo.ClosingHistory", "ListingID", "dbo.Listing", "ListingID", cascadeDelete: true);
             AddForeignKey("dbo.ClosingHistory", "UserID", "dbo.User", "UserID", cascadeDelete: true);
             CreateIndex("dbo.Bid", "ListingID");

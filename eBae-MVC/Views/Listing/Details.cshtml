@@ -4,47 +4,61 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
-<fieldset>
-    <legend>Listing</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Title)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.StartTimestamp)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StartTimestamp)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EndTimestamp)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EndTimestamp)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.User.Username)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.User.Username)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ListingID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<h2>View Listing: @Html.DisplayFor(model => model.Title)</h2>
+<table style="width: 90%;" align="center" valign="top">
+    <tbody>
+        <tr>
+            <td style="width: 40%;">
+                <table style="width: 100%; border: 0px;">
+                    <tbody>
+                        <tr>
+                            <td>Image</td>
+                        </tr>
+                        <tr>
+                            <td><b>Owner: </b>@Html.DisplayFor(model => model.User.Username)</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <h2>Description</h2>
+                                @Html.DisplayFor(model => model.Description)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="width: 30%;" valign="top">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td><strong>Current Price</strong></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enter Bid</strong></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Time Remaining</strong></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>End Time</strong></td>
+                            <td>@Html.DisplayFor(model => model.EndTimestamp)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Start Time</strong></td>
+                            <td>@Html.DisplayFor(model => model.StartTimestamp)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="width: 30%;" valign="top">
+            <h2>Bidding History</h2>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<center>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "button" })
+</center>

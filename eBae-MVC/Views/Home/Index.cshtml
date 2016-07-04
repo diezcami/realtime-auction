@@ -1,31 +1,34 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model eBae_MVC.Models.User
+
+
+@{
+    ViewBag.Title = "View Users";
     Layout = "~/Views/Shared/_Home_Layout.cshtml";
 }
 
 <h2>Log in</h2>
-<form class="form-horizontal">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
     <fieldset>
-        <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="username">Username</label>
-            <div class="col-md-4">
-                <input id="username" name="username" type="text" placeholder="" class="form-control input-md" required="">
-            </div>
-        </div>
-
-        <!-- Password input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="password">Password</label>
-            <div class="col-md-4">
-                <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="">
-
-            </div>
-        </div>
-        <center>
-            <button type="button" id="login" name="login" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Listing")'">Log In</button>
-        </center>
-
-
+        <table width="20%" align="center">
+            <tr>
+                <td width="15%"><h4>Username</h4></td>
+                <td>
+                    <input id="username" name="username" type="text" placeholder="" class="form-control input-md" required="">
+                </td>
+            </tr>
+            <tr>
+                <td><h4>Password</h4></td>
+                <td>
+                    <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="">
+                </td>
+            </tr>
+            </table>
+            <center>
+                <button type="submit" value="Index" id="login" name="login" class="button" onclick="location.href='@Url.Action("Index", "Listing")'">Log In</button>
+            </center>
     </fieldset>
-</form>
+
+}

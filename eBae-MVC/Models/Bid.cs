@@ -11,8 +11,8 @@ namespace eBae_MVC.Models
         public DateTime Timestamp { get; set; }
         public int Amount { get; set; }
 
-        public User User { get; set; }
-        public Listing Listing { get; set; }
+        public virtual User User { get; set; }
+        public virtual Listing Listing { get; set; }
 
     }
 }

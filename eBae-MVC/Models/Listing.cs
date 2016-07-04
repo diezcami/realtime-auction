@@ -12,7 +12,7 @@ namespace eBae_MVC.Models
         public DateTime StartTimestamp { get; set; }
         public DateTime EndTimestamp { get; set; }
         public int UserID { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<Watch> Watches { get; set; }
         public virtual ICollection<Bid> Bids { get; set; }
     }
