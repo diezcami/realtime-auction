@@ -1,0 +1,39 @@
+﻿@model IEnumerable<eBae_MVC.Models.Listing>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<table class="greyborder" width="80%" align="center">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th>@Html.DisplayNameFor(model => model.Description)</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>@Html.DisplayNameFor(model => model.User.Username)</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTimestamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTimestamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Username)
+        </td>
+        <td><center>@Html.ActionLink("View Listing", "Details", new { id = item.ListingID }, new { @class = "button" })</center></td>
+    </tr>
+}
+
+</table>
