@@ -37,7 +37,7 @@ namespace eBae_MVC.Controllers
             {
                 return HttpNotFound();
             }
-            Session["CurrentListing"] = id;
+            Session["CurrentListingID"] = id;
             ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".jpg");
             return View(listing);
         }
@@ -49,22 +49,29 @@ namespace eBae_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Details(Bid bid)
         {
+            int currentListingID = Convert.ToInt32(Session["CurrentListingID"]);
+            Listing currentListingOwner = db.Listings.FirstOrDefault(l => l.ListingID == currentListingID);
+            int currentListingOwnerID = currentListingOwner.UserID;
+
             if (ModelState.IsValid)
             {
-                bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
-                bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
-                bid.ListingID = Convert.ToInt32(Session["CurrentListing"]);
-                bid.Listing = db.Listings.FirstOrDefault(l => l.ListingID == bid.ListingID);
-                bid.Timestamp = DateTime.Now;
+                if (currentListingOwnerID != Convert.ToInt32(Session["CurrentUserID"]))
+                {
+                    bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
+                    bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
+                    bid.ListingID = Convert.ToInt32(Session["CurrentListingID"]);
+                    bid.Listing = db.Listings.FirstOrDefault(l => l.ListingID == bid.ListingID);
+                    bid.Timestamp = DateTime.Now;
 
-                db.Bids.Add(bid);
-                db.SaveChanges();
-                
+                    db.Bids.Add(bid);
+                    db.SaveChanges();
 
-                return RedirectToAction("Details");
+
+                    return RedirectToAction("Details");
+                }
             }
 
-            return View(bid);
+            return View(db.Listings.FirstOrDefault(l => l.ListingID == currentListingID));
         }
 
         protected override void Dispose(bool disposing)

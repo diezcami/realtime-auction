@@ -1,25 +1,25 @@
-namespace eBae_MVC.Migrations
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.Entity;
+using eBae_MVC.Models;
+using eBae_MVC.DAL;
+using System;
+using System.Data.Entity.Migrations;
+
+namespace ContosoUniversity.DAL
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity.Migrations;
-    using eBae_MVC.Models;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<eBae_MVC.DAL.AuctionContext>
+    public class AuctionInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<AuctionContext>
     {
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = false;
-        }
-
         protected override void Seed(eBae_MVC.DAL.AuctionContext context)
         {
             var users = new List<User>
             {
                 new User { Username = "Cami",   Password = "password"},
                 new User { Username = "EJ",     Password = "password"},
-                new User { Username = "Nina",   Password = "password"}
+                new User { Username = "Nina",   Password = "password"},
+                new User { Username = "a",   Password = "a"},
+
             };
             users.ForEach(s => context.Users.AddOrUpdate(p => p.Username, s));
             context.SaveChanges();
@@ -49,6 +49,31 @@ namespace eBae_MVC.Migrations
                     UserID = users.Single(s => s.Username == "EJ").UserID
                 }
             };
+
+            var watches = new List<Watch>
+            {
+                new Watch { 
+                    UserID = users.Single(s => s.Username == "Cami").UserID,
+                    ListingID = listings.Single(s => s.Title == "Piano").ListingID
+                },
+                new Watch { 
+                    UserID = users.Single(s => s.Username == "Nina").UserID,
+                    ListingID = listings.Single(s => s.Title == "Car").ListingID
+                }
+            };
+          
+            foreach (Watch w in watches)
+            {
+                var watchesInDatabase = context.Watches.Where(
+                    s =>
+                         s.User.UserID == w.UserID &&
+                         s.Listing.ListingID == w.ListingID).SingleOrDefault();
+                if (watchesInDatabase == null)
+                {
+                    context.Watches.Add(w);
+                }
+            }
+            context.SaveChanges();
         }
     }
 }

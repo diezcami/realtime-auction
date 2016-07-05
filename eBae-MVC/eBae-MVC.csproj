@@ -140,12 +140,13 @@
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\AuctionContext.cs" />
+    <Compile Include="DAL\AuctionInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607050924486_init.cs" />
-    <Compile Include="Migrations\201607050924486_init.Designer.cs">
-      <DependentUpon>201607050924486_init.cs</DependentUpon>
+    <Compile Include="Migrations\201607050956033_init.cs" />
+    <Compile Include="Migrations\201607050956033_init.Designer.cs">
+      <DependentUpon>201607050956033_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bid.cs" />
@@ -156,6 +157,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\eBae_MVC.mdf" />
+    <Content Include="App_Data\eBae_MVC_log.ldf">
+      <DependentUpon>eBae_MVC.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -271,15 +276,14 @@
     <Content Include="Views\MyListing\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607050924486_init.resx">
-      <DependentUpon>201607050924486_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607050956033_init.resx">
+      <DependentUpon>201607050956033_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,5 @@
 ﻿@model eBae_MVC.Models.Listing
 
-
 @{
     ViewBag.Title = "Details";
 }
@@ -63,6 +62,21 @@
             </td>
             <td style="width: 30%;" valign="top">
             <h2>Bidding History</h2>
+            <table>
+                <tr>
+                    <th>User</th>
+                    <th>Bid Amount</th>
+                    <th>Bid Timestamp</th>
+                </tr>
+                @foreach (var item in Model.Bids)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.User.Username)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Timestamp)</td>
+                    </tr>
+                }
+            </table>
             </td>
         </tr>
     </tbody>
