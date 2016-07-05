@@ -5,7 +5,7 @@ namespace eBae_MVC.Models
 {
     public class ClosingHistory
     {
-        public string ClosingHistoryID { get; set; }
+        public int ClosingHistoryID { get; set; }
         public int BidID { get; set; }
         public int ListingID { get; set; }
         public int UserID { get; set; }

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<eBae_MVC.Models.Listing>
+
+@{
+    ViewBag.Title = "My Listings";
+}
+
+<h2>@ViewBag.Title</h2>
+<table class="display" width="80%" align="center">
+    <tr>
+        <th>Listing Name</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Functions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                <img src="@ViewBag.ImageURL@Html.DisplayFor(modelItem => item.ListingID)@ViewBag.JPG" width="150">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTimestamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTimestamp)
+            </td>
+            <td><center>
+                @Html.ActionLink("View", "Details", "Listing", new { id = item.ListingID }, new { @class = "button" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.ListingID }, new { @class = "button" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ListingID }, new { @class = "button" })
+                </center>
+           </td>
+        </tr>
+    }
+
+</table>
+<center>
+    @Html.ActionLink("Create New Listing", "Create", null, new { @class = "button" })
+</center>

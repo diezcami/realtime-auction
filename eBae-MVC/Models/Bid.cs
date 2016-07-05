@@ -1,10 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eBae_MVC.Models
 {
     public class Bid
     {
-        public string BidID { get; set; }
+        public int BidID { get; set; }
         public int UserID { get; set; }
         public int ListingID { get; set; }
 

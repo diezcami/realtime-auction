@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using eBae_MVC.Models;
 using eBae_MVC.DAL;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace eBae_MVC.Controllers
 {
@@ -20,6 +22,8 @@ namespace eBae_MVC.Controllers
         public ActionResult Index()
         {
             var listings = db.Listings.Include(l => l.User);
+            ViewBag.ImageURL = Url.Content("~/Content/Images/");
+            ViewBag.JPG = ".jpg";
             return View(listings.ToList());
         }
 
@@ -33,92 +37,34 @@ namespace eBae_MVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".png");
+            Session["CurrentListing"] = id;
+            ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".jpg");
             return View(listing);
         }
 
         //
-        // GET: /Listing/Create
-
-        public ActionResult Create()
-        {
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Username");
-            return View();
-        }
-
-        //
-        // POST: /Listing/Create
+        // POST: /Listing/Details/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Listing listing)
+        public ActionResult Details(Bid bid)
         {
             if (ModelState.IsValid)
             {
-                db.Listings.Add(listing);
+                bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
+                bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
+                bid.ListingID = Convert.ToInt32(Session["CurrentListing"]);
+                bid.Listing = db.Listings.FirstOrDefault(l => l.ListingID == bid.ListingID);
+                bid.Timestamp = DateTime.Now;
+
+                db.Bids.Add(bid);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
+
+                return RedirectToAction("Details");
             }
 
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Username", listing.UserID);
-            return View(listing);
-        }
-
-        //
-        // GET: /Listing/Edit/5
-
-        public ActionResult Edit(int id = 0)
-        {
-            Listing listing = db.Listings.Find(id);
-            if (listing == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Username", listing.UserID);
-            return View(listing);
-        }
-
-        //
-        // POST: /Listing/Edit/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Listing listing)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(listing).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Username", listing.UserID);
-            return View(listing);
-        }
-
-        //
-        // GET: /Listing/Delete/5
-
-        public ActionResult Delete(int id = 0)
-        {
-            Listing listing = db.Listings.Find(id);
-            if (listing == null)
-            {
-                return HttpNotFound();
-            }
-            return View(listing);
-        }
-
-        //
-        // POST: /Listing/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Listing listing = db.Listings.Find(id);
-            db.Listings.Remove(listing);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return View(bid);
         }
 
         protected override void Dispose(bool disposing)

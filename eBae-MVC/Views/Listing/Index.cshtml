@@ -7,11 +7,12 @@
 <h2>Browse Listings</h2>
 <table class="display" width="80%" align="center">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.Title)</th>
-        <th>@Html.DisplayNameFor(model => model.Description)</th>
+        <th>Listing Name</th>
+        <th>Image</th>
+        <th>Description</th>
         <th>Start Date</th>
         <th>End Date</th>
-        <th>@Html.DisplayNameFor(model => model.User.Username)</th>
+        <th>Owner</th>
         <th></th>
     </tr>
 
@@ -20,6 +21,8 @@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
+        <td>
+            <img src="@ViewBag.ImageURL@Html.DisplayFor(modelItem => item.ListingID)@ViewBag.JPG" width="150"></td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>

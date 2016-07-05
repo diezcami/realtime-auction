@@ -136,15 +136,16 @@
     <Compile Include="Constant.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListingController.cs" />
+    <Compile Include="Controllers\MyListingController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\AuctionContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607040531314_init.cs" />
-    <Compile Include="Migrations\201607040531314_init.Designer.cs">
-      <DependentUpon>201607040531314_init.cs</DependentUpon>
+    <Compile Include="Migrations\201607050924486_init.cs" />
+    <Compile Include="Migrations\201607050924486_init.Designer.cs">
+      <DependentUpon>201607050924486_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bid.cs" />
@@ -259,14 +260,15 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
-    <Content Include="Views\Store\Index.cshtml" />
-    <Content Include="Views\Store\Browse.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Store\Details.cshtml" />
     <Content Include="Views\Listing\Index.cshtml" />
     <Content Include="Views\Listing\Details.cshtml" />
-    <Content Include="Views\Listing\Create.cshtml" />
     <Content Include="Views\Shared\_Home_Layout.cshtml" />
+    <Content Include="Views\MyListing\Index.cshtml" />
+    <Content Include="Views\MyListing\Details.cshtml" />
+    <Content Include="Views\MyListing\Create.cshtml" />
+    <Content Include="Views\MyListing\Edit.cshtml" />
+    <Content Include="Views\MyListing\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -276,8 +278,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607040531314_init.resx">
-      <DependentUpon>201607040531314_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607050924486_init.resx">
+      <DependentUpon>201607050924486_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -11,7 +11,7 @@ namespace eBae_MVC.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201607040531314_init"; }
+            get { return "201607050924486_init"; }
         }
         
         string IMigrationMetadata.Source
