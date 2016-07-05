@@ -12,12 +12,20 @@ namespace eBae_MVC
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
+
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            HttpContext context = HttpContext.Current;
 
+            if (context != null && context.Session != null)
+            {
+                Session["CurrentUsername"] = "";
+                Session["CurrentUserID"] = 0;
+            }
+
+            AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

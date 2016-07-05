@@ -27,7 +27,10 @@ namespace eBae_MVC.Controllers
             {
                 if (db.Users.Any(u => u.Username == user.Username && u.Password == user.Password))
                 {
-                        return RedirectToAction("Index", "Listing");
+                    var myUser = db.Users.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
+                    Session["CurrentUserID"] = myUser.UserID;
+                    Session["CurrentUsername"] = myUser.Username;
+                    return RedirectToAction("Index", "Listing");
                 }
             }
             return View();

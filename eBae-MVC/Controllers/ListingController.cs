@@ -33,6 +33,7 @@ namespace eBae_MVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".png");
             return View(listing);
         }
 

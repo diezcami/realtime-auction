@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <fieldset>
-        <table width="20%" align="center">
+        <table width="350" align="center">
             <tr>
                 <td width="15%"><h4>Username</h4></td>
                 <td>
@@ -27,7 +27,7 @@
             </tr>
             </table>
             <center>
-                <button type="submit" value="Index" id="login" name="login" class="button" onclick="location.href='@Url.Action("Index", "Listing")'">Log In</button>
+                <button type="submit" value="Index" id="login" name="login" class="button">Log In</button>
             </center>
     </fieldset>
 

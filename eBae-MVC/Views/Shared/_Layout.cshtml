@@ -1,4 +1,8 @@
 ﻿<!DOCTYPE html>
+@{
+    ViewBag.CurrentUsername = Session["CurrentUsername"];
+    ViewBag.CurrentUserID = Session["CurrentUserID"];
+}
 <html>
 <head>
     <title>@ViewBag.Title</title>
@@ -11,6 +15,7 @@
 </head>
 <body>
     <div id="nav">
+        <a href="#">Hello, @ViewBag.CurrentUsername!</a>
         <a href="/Listing">Browse Listings</a>
         <a href="/Watchlist">Watchlist</a>
         <a href="/Listings">My Auctions</a>
