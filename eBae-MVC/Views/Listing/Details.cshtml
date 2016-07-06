@@ -14,11 +14,11 @@
                             <td><img src="@ViewBag.Image" width="520"/></td>
                         </tr>
                         <tr>
-                            <td><b>Owner: </b>@Html.DisplayFor(model => model.User.Username)</td>
+                            <td style="text-align: left;"><b>Owner: </b>@Html.DisplayFor(model => model.User.Username)</td>
                             
                         </tr>
                         <tr>
-                            <td>
+                            <td style="text-align: left;">
                                 <h2>Description</h2>
                                 @Html.DisplayFor(model => model.Description)
                             </td>
@@ -26,57 +26,58 @@
                     </tbody>
                 </table>
             </td>
-            <td style="width: 30%;" valign="top">
+            <td style="width: 30%; vertical-align: top;" valign="top">
                 <table style="width: 100%">
                     <tbody>
                         <tr>
-                            <td><strong>Current Price</strong></td>
-                            <td>&nbsp;</td>
+                            <td style="text-align: left;"><strong>Current Price</strong></td>
+                            <td style="text-align: left;">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td><strong>Enter Amount</strong></td>
-                            <td>
-                            @using (Html.BeginForm())
-                            {
-                                @Html.AntiForgeryToken()
-                                @Html.ValidationSummary(true)
-                                <input id="amount" name="amount" type="text" placeholder="" class="form-control input-md" required="">
-                                <input type="submit" value="Bid!" />
-                            }
+                            <td style="text-align: left;"><strong>Enter Amount</strong></td>
+                            <td style="text-align: left;">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true)
+                                    <input id="amount" name="amount" type="text" placeholder="" class="form-control input-md" required="" style="display: inline; width: 60%">
+                                    <input type="submit" value="Bid!" class="button"/>
+                                }
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>Time Remaining</strong></td>
-                            <td>&nbsp;</td>
+                            <td style="text-align: left;"><strong>Time Remaining</strong></td>
+                            <td style="text-align: left;">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td><strong>End Time</strong></td>
-                            <td>@Html.DisplayFor(model => model.EndTimestamp)</td>
+                            <td style="text-align: left;"><strong>End Time</strong></td>
+                            <td style="text-align: left;">@Html.DisplayFor(model => model.EndTimestamp)</td>
                         </tr>
                         <tr>
-                            <td><strong>Start Time</strong></td>
-                            <td>@Html.DisplayFor(model => model.StartTimestamp)</td>
+                            <td style="text-align: left;"><strong>Start Time</strong></td>
+                            <td style="text-align: left;">@Html.DisplayFor(model => model.StartTimestamp)</td>
                         </tr>
                     </tbody>
                 </table>
             </td>
-            <td style="width: 30%;" valign="top">
+            <td style="width: 30%; vertical-align: top; text-align: left;" valign="top">
             <h2>Bidding History</h2>
-            <table>
-                <tr>
-                    <th>User</th>
-                    <th>Bid Amount</th>
-                    <th>Bid Timestamp</th>
-                </tr>
-                @foreach (var item in Model.Bids)
-                {
+                View the last ten bids placed for this listing.
+                <table style="width: 100%;" valign="top">
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.User.Username)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Timestamp)</td>
+                        <th>User</th>
+                        <th>Bid Amount</th>
+                        <th>Bid Timestamp</th>
                     </tr>
-                }
-            </table>
+                    @foreach (var item in Model.Bids.OrderByDescending(b => b.Timestamp).Take(10))
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.User.Username)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Timestamp)</td>
+                        </tr>
+                    }
+                </table>
             </td>
         </tr>
     </tbody>
