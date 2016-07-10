@@ -58,6 +58,7 @@ namespace eBae_MVC.Controllers
             {
                 listing.UserID = Convert.ToInt32(Session["CurrentUserID"]);
                 listing.User = db.Users.FirstOrDefault(u => u.UserID == listing.UserID);
+                listing.StartTimestamp = DateTime.Now;
                 db.Listings.Add(listing);
                 db.SaveChanges();
 

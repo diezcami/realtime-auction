@@ -39,6 +39,10 @@ namespace eBae_MVC.Controllers
             }
             Session["CurrentListingID"] = id;
             ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".jpg");
+            ViewBag.DaysRemaining = (listing.EndTimestamp - DateTime.Now).Days;
+            ViewBag.HoursRemaining = (listing.EndTimestamp - DateTime.Now).Hours;
+            ViewBag.MinutesRemaining = (listing.EndTimestamp - DateTime.Now).Minutes;
+            ViewBag.SecondsRemaining = (listing.EndTimestamp - DateTime.Now).Seconds;
             return View(listing);
         }
 
@@ -110,7 +114,7 @@ namespace eBae_MVC.Controllers
             switch (ErrorID)
             {
                 case 1:
-                    ViewBag.ErrorText = "Browser session expired. Please log in again.";
+                    ViewBag.ErrorText = "Invalid input. Please try again.";
                     break;
                 case 2:
                     ViewBag.ErrorText = "You cannot bid on your own listing.";
