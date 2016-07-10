@@ -53,31 +53,80 @@ namespace eBae_MVC.Controllers
             Listing currentListingOwner = db.Listings.FirstOrDefault(l => l.ListingID == currentListingID);
             int currentListingOwnerID = currentListingOwner.UserID;
 
+            // Check if the link is valid
             if (ModelState.IsValid)
             {
+                // Check if the user's different from the listing owner
                 if (currentListingOwnerID != Convert.ToInt32(Session["CurrentUserID"]))
                 {
-                    bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
-                    bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
-                    bid.ListingID = Convert.ToInt32(Session["CurrentListingID"]);
-                    bid.Listing = db.Listings.FirstOrDefault(l => l.ListingID == bid.ListingID);
-                    bid.Timestamp = DateTime.Now;
+                    // Check for consecutive bids
+                    Listing listing = db.Listings.Find(currentListingID);
+                    // Dirty workaround
+                    Bid latestBid = null;
 
-                    db.Bids.Add(bid);
-                    db.SaveChanges();
+                    foreach (var b in listing.Bids.OrderByDescending(l => l.Timestamp).Take(1))
+                        latestBid = b;
 
+                    // Can't bid on finished auctions
+                    
+                    if (listing.EndTimestamp.Subtract(DateTime.Now).Seconds > 0) {
+                        if (latestBid == null || latestBid.UserID != Convert.ToInt32(Session["CurrentUserID"])) {
+                            bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
+                            bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
+                            bid.ListingID = Convert.ToInt32(Session["CurrentListingID"]);
+                            bid.Listing = db.Listings.FirstOrDefault(l => l.ListingID == bid.ListingID);
+                            bid.Timestamp = DateTime.Now;
 
-                    return RedirectToAction("Details");
+                            db.Bids.Add(bid);
+                            db.SaveChanges();
+                    
+                            return RedirectToAction("Details");
+                        } 
+                        else 
+                        {
+                            return RedirectToAction("Error", new { ErrorID = 4 });
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Error", new { ErrorID = 3 });
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Error", new { ErrorID = 2 });
                 }
             }
-
-            return View(db.Listings.FirstOrDefault(l => l.ListingID == currentListingID));
+            return RedirectToAction("Error", new { ErrorID = 1 });
         }
 
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        public ActionResult Error(int ErrorID)
+        {
+            switch (ErrorID)
+            {
+                case 1:
+                    ViewBag.ErrorText = "Browser session expired. Please log in again.";
+                    break;
+                case 2:
+                    ViewBag.ErrorText = "You cannot bid on your own listing.";
+                    break;
+                case 3:
+                    ViewBag.ErrorText = "This auction has already ended.";
+                    break;
+                case 4:
+                    ViewBag.ErrorText = "You cannot bid on the same listing twice in a row.";
+                    break;
+                default:
+                    ViewBag.ErrorText = "Something went wrong.";
+                    break;
+            }
+            return View();
         }
     }
 }

@@ -278,6 +278,7 @@
     <Content Include="Views\MyListing\Create.cshtml" />
     <Content Include="Views\MyListing\Edit.cshtml" />
     <Content Include="Views\MyListing\Delete.cshtml" />
+    <Content Include="Views\Listing\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\" />
