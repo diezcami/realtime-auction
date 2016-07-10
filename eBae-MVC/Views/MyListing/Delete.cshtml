@@ -4,51 +4,55 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Are you sure you want to delete this listing?</h2>
+<table style="width: 90%;" align="center" valign="top">
+    <tbody>
+        <tr>
+            <td style="width: 50%;">
+                <table style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td><img src="@ViewBag.Image" width="520" /></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;"><b>Owner: </b>@Html.DisplayFor(model => model.User.Username)</td>
 
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>Listing</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Title)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.StartTimestamp)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StartTimestamp)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EndTimestamp)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EndTimestamp)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.User.Username)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.User.Username)
-    </div>
-</fieldset>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">
+                                <h2>Description</h2>
+                                @Html.DisplayFor(model => model.Description)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="width: 50%; vertical-align: top; text-align: left;" valign="top">
+                <h2>Bidding History</h2>
+                View the last ten bids placed for this listing.
+                <table style="width: 100%;" valign="top">
+                    <tr>
+                        <th>User</th>
+                        <th>Bid Amount</th>
+                        <th>Bid Timestamp</th>
+                    </tr>
+                    @foreach (var item in Model.Bids.OrderByDescending(b => b.Timestamp).Take(10))
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.User.Username)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Timestamp)</td>
+                        </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
-    <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+    <center>
+        <input type="submit" value="Delete Listing" class="button"/>
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "button" })
+    </center>
 }

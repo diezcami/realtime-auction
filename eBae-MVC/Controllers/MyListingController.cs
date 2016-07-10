@@ -52,7 +52,7 @@ namespace eBae_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Listing listing)
+        public ActionResult Create(Listing listing, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -60,6 +60,17 @@ namespace eBae_MVC.Controllers
                 listing.User = db.Users.FirstOrDefault(u => u.UserID == listing.UserID);
                 db.Listings.Add(listing);
                 db.SaveChanges();
+
+                if (file != null)
+                {
+                    string FileName = System.IO.Path.GetFileName(file.FileName);
+                    string FileExtension = FileName.Substring(FileName.IndexOf("."));
+                    string FinalFileName = listing.ListingID + FileExtension;
+                    string Path = System.IO.Path.Combine(
+                                           Server.MapPath("~/Content/Images"), FinalFileName);
+                    file.SaveAs(Path);
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -108,6 +119,7 @@ namespace eBae_MVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".jpg");
             return View(listing);
         }
 

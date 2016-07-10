@@ -4,59 +4,55 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create New Listing</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Listing</legend>
+        <table align="center" width="420" >
+            <tr>
+                <td style="text-align: left">Title</td>
+                <td>
+                    @Html.EditorFor(model => model.Title)
+                    @Html.ValidationMessageFor(model => model.Title)
+                </td>
+            </tr>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
-        </div>
+            <tr>
+                <td style="text-align: left">Description</td>
+                <td>
+                    @Html.EditorFor(model => model.Description)
+                    @Html.ValidationMessageFor(model => model.Description)
+                </td>
+            </tr>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
+            <tr>
+                <td style="text-align: left">Start Timestamp (MM/DD/YYYY HH:MM)</td>
+                <td>
+                    @Html.EditorFor(model => model.StartTimestamp)
+                    @Html.ValidationMessageFor(model => model.StartTimestamp)
+                </td>
+            </tr>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.StartTimestamp)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.StartTimestamp)
-            @Html.ValidationMessageFor(model => model.StartTimestamp)
-        </div>
+            <tr>
+                <td style="text-align: left">End Timestamp (MM/DD/YYYY HH:MM)</td>
+                <td>
+                    @Html.EditorFor(model => model.EndTimestamp)
+                    @Html.ValidationMessageFor(model => model.EndTimestamp)
+                </td>
+            </tr>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EndTimestamp)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EndTimestamp)
-            @Html.ValidationMessageFor(model => model.EndTimestamp)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserID, "User")
-        </div>
-        <div class="editor-field">
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+            <tr>
+                <td style="text-align: left">Image Path</td>
+                <td>
+                    <input type="file" name="file" id="file" style="width: 100%;" />
+                </td>
+            </tr>
+        </table>
+        <center>
+            <input type="submit" value="Create" class="button"/>
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "button" })
+        </center>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -11,6 +11,7 @@ namespace eBae_MVC.Models
         public string Description { get; set; }
         public DateTime StartTimestamp { get; set; }
         public DateTime EndTimestamp { get; set; }
+        // public string ImageUrl { get; set; }
         public int UserID { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Watch> Watches { get; set; }
