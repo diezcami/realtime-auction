@@ -67,8 +67,7 @@ namespace eBae_MVC.Controllers
                     foreach (var b in listing.Bids.OrderByDescending(l => l.Timestamp).Take(1))
                         latestBid = b;
 
-                    // Can't bid on finished auctions
-                    
+                    // Can't bid on finished auctions                   
                     if (listing.EndTimestamp.Subtract(DateTime.Now).Seconds > 0) {
                         if (latestBid == null || latestBid.UserID != Convert.ToInt32(Session["CurrentUserID"])) {
                             bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
