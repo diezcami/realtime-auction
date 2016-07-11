@@ -56,6 +56,8 @@ namespace eBae_MVC.Migrations
                         Description = c.String(),
                         StartTimestamp = c.DateTime(nullable: false),
                         EndTimestamp = c.DateTime(nullable: false),
+                        ImageUrl = c.String(),
+                        StartingPrice = c.Int(nullable: false),
                         UserID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ListingID)

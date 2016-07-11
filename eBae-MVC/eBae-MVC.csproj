@@ -144,13 +144,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607050956033_init.cs" />
-    <Compile Include="Migrations\201607050956033_init.Designer.cs">
-      <DependentUpon>201607050956033_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607101604062_init_with_imageurl.cs" />
-    <Compile Include="Migrations\201607101604062_init_with_imageurl.Designer.cs">
-      <DependentUpon>201607101604062_init_with_imageurl.cs</DependentUpon>
+    <Compile Include="Migrations\201607110642433_init.cs" />
+    <Compile Include="Migrations\201607110642433_init.Designer.cs">
+      <DependentUpon>201607110642433_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bid.cs" />
@@ -288,11 +284,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607050956033_init.resx">
-      <DependentUpon>201607050956033_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607101604062_init_with_imageurl.resx">
-      <DependentUpon>201607101604062_init_with_imageurl.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607110642433_init.resx">
+      <DependentUpon>201607110642433_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

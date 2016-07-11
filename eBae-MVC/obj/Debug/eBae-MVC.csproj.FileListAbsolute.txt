@@ -33,4 +33,3 @@ C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Owin.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Owin.xml
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae_MVC.Migrations.init.resources
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae-MVC.csproj.GenerateResource.Cache
-C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae_MVC.Migrations.init_with_imageurl.resources
