@@ -21,8 +21,6 @@ namespace eBae_MVC.Controllers
         {
             string currentUser = Session["CurrentUsername"].ToString();
             var listings = db.Listings.Include(l => l.User).Where (l => l.User.Username.Equals(currentUser));
-            ViewBag.ImageURL = Url.Content("~/Content/Images/");
-            ViewBag.JPG = ".jpg";
             return View(listings.ToList());
         }
 
@@ -59,8 +57,7 @@ namespace eBae_MVC.Controllers
                 listing.UserID = Convert.ToInt32(Session["CurrentUserID"]);
                 listing.User = db.Users.FirstOrDefault(u => u.UserID == listing.UserID);
                 listing.StartTimestamp = DateTime.Now;
-                db.Listings.Add(listing);
-                db.SaveChanges();
+                
 
                 if (file != null)
                 {
@@ -70,7 +67,11 @@ namespace eBae_MVC.Controllers
                     string Path = System.IO.Path.Combine(
                                            Server.MapPath("~/Content/Images"), FinalFileName);
                     file.SaveAs(Path);
+                    listing.ImageUrl = Url.Content("~/Content/Images/") + FinalFileName;
                 }
+
+                db.Listings.Add(listing);
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -120,7 +121,6 @@ namespace eBae_MVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".jpg");
             return View(listing);
         }
 

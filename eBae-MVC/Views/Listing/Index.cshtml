@@ -10,6 +10,7 @@
         <th>Listing Name</th>
         <th>Image</th>
         <th>Description</th>
+        <th>Current Price</th>
         <th>Start Date</th>
         <th>End Date</th>
         <th>Owner</th>
@@ -22,9 +23,15 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            <img src="@ViewBag.ImageURL@Html.DisplayFor(modelItem => item.ListingID)@ViewBag.JPG" width="150"></td>
+            <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="150"></td>
         <td width="40%" style="text-align: justify;">
             @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
+            {
+                @Html.DisplayFor(b => bid.Amount)
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StartTimestamp)
@@ -48,6 +55,7 @@
         <th>Listing Name</th>
         <th>Image</th>
         <th>Description</th>
+        <th>Final Price</th>
         <th>Start Date</th>
         <th>End Date</th>
         <th>Owner</th>
@@ -61,14 +69,21 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                <img src="@ViewBag.ImageURL@Html.DisplayFor(modelItem => item.ListingID)@ViewBag.JPG" width="150">
+                <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="150">
             </td>
             <td width="40%" style="text-align: justify;">
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
+                @foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
+                {
+                    @Html.DisplayFor(b => bid.Amount)
+                }
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.StartTimestamp)
             </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.EndTimestamp)
             </td>

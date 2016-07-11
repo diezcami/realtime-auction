@@ -45,7 +45,7 @@ namespace eBae_MVC.Controllers
 
             if (latestBid == null) 
             {
-                ViewBag.CurrentPrice = "Haven't implemented starting bid yet";
+                ViewBag.CurrentPrice = listing.StartingPrice;
             } else {
                 ViewBag.CurrentPrice = latestBid.Amount;
             }
@@ -89,8 +89,9 @@ namespace eBae_MVC.Controllers
                         // Can't bid on the same auction twice
                         if (latestBid == null || latestBid.UserID != Convert.ToInt32(Session["CurrentUserID"])) 
                         {
-                            // Amount must be greater than the last bid and current bid amount
-                            if (latestBid == null || bid.Amount > latestBid.Amount)
+                            // Amount must be greater than the last bid and starting big
+                            if (( latestBid == null && bid.Amount >= listing.StartingPrice ) || 
+                                ( latestBid != null && bid.Amount > latestBid.Amount ))
                             {
                                 bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
                                 bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
@@ -149,7 +150,7 @@ namespace eBae_MVC.Controllers
                     ViewBag.ErrorText = "You cannot bid on the same listing twice in a row.";
                     break;
                 case 5:
-                    ViewBag.ErrorText = "Your bid amount must be higher than the previous one.";
+                    ViewBag.ErrorText = "Your bid amount must be higher than the previous bid or starting price.";
                     break;
                 default:
                     ViewBag.ErrorText = "Something went wrong.";

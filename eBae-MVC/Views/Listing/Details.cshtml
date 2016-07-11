@@ -11,7 +11,7 @@
             <td width="400">
                 <table><tbody>
                         <tr>
-                            <td><img src="@ViewBag.Image" width="400"/></td>
+                            <td><img src="@Html.DisplayFor(model => model.ImageUrl)" width="400" /></td>
                         </tr>
                         <tr>
                             <td style="text-align: left;"><b>Owner: </b>@Html.DisplayFor(model => model.User.Username)</td>

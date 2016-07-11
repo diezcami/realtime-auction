@@ -270,15 +270,12 @@
     <Content Include="Views\Listing\Details.cshtml" />
     <Content Include="Views\Shared\_Home_Layout.cshtml" />
     <Content Include="Views\MyListing\Index.cshtml" />
-    <Content Include="Views\MyListing\Details.cshtml" />
     <Content Include="Views\MyListing\Create.cshtml" />
-    <Content Include="Views\MyListing\Edit.cshtml" />
     <Content Include="Views\MyListing\Delete.cshtml" />
     <Content Include="Views\Listing\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

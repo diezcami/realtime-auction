@@ -29,6 +29,14 @@
             </tr>
 
             <tr>
+                <td style="text-align: left">Starting Price</td>
+                <td>
+                    @Html.EditorFor(model => model.StartingPrice)
+                    @Html.ValidationMessageFor(model => model.StartingPrice)
+                </td>
+            </tr>
+
+            <tr>
                 <td style="text-align: left">Ending Time (MM/DD/YYYY HH:MM)</td>
                 <td>
                     @Html.EditorFor(model => model.EndTimestamp)
