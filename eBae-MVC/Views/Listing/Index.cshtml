@@ -16,7 +16,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Where(l => l.EndTimestamp.Subtract(DateTime.Now).Seconds > 0)) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -38,5 +38,45 @@
         <td><center>@Html.ActionLink("View Listing", "Details", new { id = item.ListingID }, new { @class = "button" })</center></td>
     </tr>
 }
+
+</table>
+
+<br /><br />
+<h2>Expired Listings</h2>
+<table class="display" width="80%" align="center">
+    <tr>
+        <th>Listing Name</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Owner</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Where(l => l.EndTimestamp.Subtract(DateTime.Now).Seconds <= 0))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                <img src="@ViewBag.ImageURL@Html.DisplayFor(modelItem => item.ListingID)@ViewBag.JPG" width="150">
+            </td>
+            <td width="40%" style="text-align: justify;">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTimestamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTimestamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Username)
+            </td>
+            <td><center>@Html.ActionLink("View Listing", "Details", new { id = item.ListingID }, new { @class = "button" })</center></td>
+        </tr>
+    }
 
 </table>

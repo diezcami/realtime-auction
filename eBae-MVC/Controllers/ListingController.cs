@@ -24,6 +24,7 @@ namespace eBae_MVC.Controllers
             var listings = db.Listings.Include(l => l.User);
             ViewBag.ImageURL = Url.Content("~/Content/Images/");
             ViewBag.JPG = ".jpg";
+            ViewBag.Now = DateTime.Now;
             return View(listings.ToList());
         }
 
@@ -37,6 +38,19 @@ namespace eBae_MVC.Controllers
             {
                 return HttpNotFound();
             }
+
+            Bid latestBid = null;
+            foreach (var b in listing.Bids.OrderByDescending(l => l.Timestamp).Take(1))
+                latestBid = b;
+
+            if (latestBid == null) 
+            {
+                ViewBag.CurrentPrice = "Haven't implemented starting bid yet";
+            } else {
+                ViewBag.CurrentPrice = latestBid.Amount;
+            }
+
+
             Session["CurrentListingID"] = id;
             ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".jpg");
             ViewBag.DaysRemaining = (listing.EndTimestamp - DateTime.Now).Days;
@@ -67,23 +81,32 @@ namespace eBae_MVC.Controllers
                     Listing listing = db.Listings.Find(currentListingID);
                     // Dirty workaround
                     Bid latestBid = null;
-
                     foreach (var b in listing.Bids.OrderByDescending(l => l.Timestamp).Take(1))
                         latestBid = b;
-
                     // Can't bid on finished auctions                   
-                    if (listing.EndTimestamp.Subtract(DateTime.Now).Seconds > 0) {
-                        if (latestBid == null || latestBid.UserID != Convert.ToInt32(Session["CurrentUserID"])) {
-                            bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
-                            bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
-                            bid.ListingID = Convert.ToInt32(Session["CurrentListingID"]);
-                            bid.Listing = db.Listings.FirstOrDefault(l => l.ListingID == bid.ListingID);
-                            bid.Timestamp = DateTime.Now;
+                    if (listing.EndTimestamp.Subtract(DateTime.Now).Seconds > 0) 
+                    {
+                        // Can't bid on the same auction twice
+                        if (latestBid == null || latestBid.UserID != Convert.ToInt32(Session["CurrentUserID"])) 
+                        {
+                            // Amount must be greater than the last bid and current bid amount
+                            if (latestBid == null || bid.Amount > latestBid.Amount)
+                            {
+                                bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
+                                bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
+                                bid.ListingID = Convert.ToInt32(Session["CurrentListingID"]);
+                                bid.Listing = db.Listings.FirstOrDefault(l => l.ListingID == bid.ListingID);
+                                bid.Timestamp = DateTime.Now;
 
-                            db.Bids.Add(bid);
-                            db.SaveChanges();
-                    
-                            return RedirectToAction("Details");
+                                db.Bids.Add(bid);
+                                db.SaveChanges();
+
+                                return RedirectToAction("Details");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Error", new { ErrorID = 5 });
+                            }
                         } 
                         else 
                         {
@@ -124,6 +147,9 @@ namespace eBae_MVC.Controllers
                     break;
                 case 4:
                     ViewBag.ErrorText = "You cannot bid on the same listing twice in a row.";
+                    break;
+                case 5:
+                    ViewBag.ErrorText = "Your bid amount must be higher than the previous one.";
                     break;
                 default:
                     ViewBag.ErrorText = "Something went wrong.";
