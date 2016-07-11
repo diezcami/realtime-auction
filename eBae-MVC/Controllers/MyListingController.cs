@@ -63,7 +63,7 @@ namespace eBae_MVC.Controllers
                 {
                     string FileName = System.IO.Path.GetFileName(file.FileName);
                     string FileExtension = FileName.Substring(FileName.IndexOf("."));
-                    string FinalFileName = listing.ListingID + FileExtension;
+                    string FinalFileName = listing.Title + FileExtension;
                     string Path = System.IO.Path.Combine(
                                            Server.MapPath("~/Content/Images"), FinalFileName);
                     file.SaveAs(Path);
