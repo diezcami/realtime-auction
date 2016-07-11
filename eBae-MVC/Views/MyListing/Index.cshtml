@@ -29,10 +29,17 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
-                {
-                    @Html.DisplayFor(b => bid.Amount)
+                @if (item.Bids.Count > 0) { 
+                    foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
+                    {
+                        @Html.DisplayFor(b => bid.Amount)
+                    }
                 }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.StartingPrice)
+                }
+                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartTimestamp)
@@ -80,9 +87,16 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
+                @if (item.Bids.Count > 0)
                 {
-                    @Html.DisplayFor(b => bid.Amount)
+                    foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
+                    {
+                        @Html.DisplayFor(b => bid.Amount)
+                    }
+                }
+                else
+                {
+                    <text>No bids placed :(</text>
                 }
             </td>
             <td>
