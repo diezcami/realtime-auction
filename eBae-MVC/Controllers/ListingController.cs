@@ -52,13 +52,7 @@ namespace eBae_MVC.Controllers
                 ViewBag.CurrentPrice = latestBid.Amount;
             }
 
-
             Session["CurrentListingID"] = id;
-            ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".jpg");
-            ViewBag.DaysRemaining = (listing.EndTimestamp - DateTime.Now).Days;
-            ViewBag.HoursRemaining = (listing.EndTimestamp - DateTime.Now).Hours;
-            ViewBag.MinutesRemaining = (listing.EndTimestamp - DateTime.Now).Minutes;
-            ViewBag.SecondsRemaining = (listing.EndTimestamp - DateTime.Now).Seconds;
             return View(listing);
         }
 
@@ -69,6 +63,7 @@ namespace eBae_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Details(Bid bid)
         {
+            
             int currentListingID = Convert.ToInt32(Session["CurrentListingID"]);
             Listing currentListingOwner = db.Listings.FirstOrDefault(l => l.ListingID == currentListingID);
             int currentListingOwnerID = currentListingOwner.UserID;
@@ -146,6 +141,8 @@ namespace eBae_MVC.Controllers
 
         public ActionResult Error(int ErrorID)
         {
+            ViewBag.CurrentListingID = Convert.ToInt32(Session["CurrentListingID"]);
+
             switch (ErrorID)
             {
                 case 1:

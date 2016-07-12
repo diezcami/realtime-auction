@@ -96,3 +96,6 @@ select {
     font-family: 'Open Sans', sans-serif;
 }
 
+#clockdiv > span{
+    font-weight: bold;
+}

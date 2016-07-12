@@ -38,22 +38,38 @@
                         <tr>
                             <td style="text-align: left;"><strong>Enter Amount</strong></td>
                             <td style="text-align: left;">
-                                @using (Html.BeginForm())
+                                @if (Model.EndTimestamp.Subtract(DateTime.Now).Seconds > 0)
                                 {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true)
-                                    <input id="amount" name="amount" type="text" placeholder="" class="form-control input-md" required="" style="display: inline; width: 60%">
-                                    <input type="submit" value="Bid!" class="button"/>
+                                    using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true)
+                                        <input id="amount" name="amount" type="text" placeholder="" class="form-control input-md" required="" style="display: inline; width: 60%">
+                                        <input type="submit" value="Bid!" class="button"/>
+                                    }
+                                }
+                                else
+                                {
+                                    <b>You cannot bid on this listing.</b>
                                 }
                             </td>
                         </tr>
                         <tr>
                             <td style="text-align: left;"><strong>Time Remaining</strong></td>
                             <td style="text-align: left;">
-                                @ViewBag.DaysRemaining days, 
-                                @ViewBag.HoursRemaining hours,
-                                @ViewBag.MinutesRemaining minutes and
-                                @ViewBag.SecondsRemaining seconds
+                                @if (Model.EndTimestamp.Subtract(DateTime.Now).Seconds > 0) 
+                                { 
+                                    <div id="clockdiv">
+                                            <span class="days"></span> days, 
+                                            <span class="hours"></span> hours, 
+                                            <span class="minutes"></span> minutes and 
+                                            <span class="seconds"></span> seconds
+                                    </div>
+                                }
+                                else
+                                {
+                                    <b>This auction is closed!</b>
+                                }
                             </td>
                         </tr>
                         <tr>
@@ -121,6 +137,48 @@ View the realtime bid history for this listing.
                 $("#currentPrice").append(amount);
             };
         });
+
+        function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t / 1000) % 60);
+            var minutes = Math.floor((t / 1000 / 60) % 60);
+            var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+            var days = Math.floor(t / (1000 * 60 * 60 * 24));
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };
+        }
+
+        function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var daysSpan = clock.querySelector('.days');
+            var hoursSpan = clock.querySelector('.hours');
+            var minutesSpan = clock.querySelector('.minutes');
+            var secondsSpan = clock.querySelector('.seconds');
+
+            function updateClock() {
+                var t = getTimeRemaining(endtime);
+
+                daysSpan.innerHTML = t.days;
+                hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+                if (t.total <= 0) {
+                    clearInterval(timeinterval);
+                }
+            }
+
+            updateClock();
+            var timeinterval = setInterval(updateClock, 1000);
+        }
+
+        var deadline = @Html.Raw(Json.Encode(Model.EndTimestamp.ToString()));
+        initializeClock('clockdiv', deadline);
     </script>
 }
 
