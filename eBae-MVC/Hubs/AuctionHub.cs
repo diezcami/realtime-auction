@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
-
-namespace eBae_MVC.Hubs
+namespace eBae_MVC
 {
     public class AuctionHub : Hub
     {
-        public void Hello()
+        public void Send(string name, string message)
         {
-            Clients.All.hello();
+            // Call the addNewMessageToPage method to update clients.
+            Clients.All.addNewMessageToPage(name, message);
         }
     }
 }

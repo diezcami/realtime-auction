@@ -167,6 +167,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\AuctionHub.cs" />
     <Compile Include="Migrations\201607110642433_init.cs" />
     <Compile Include="Migrations\201607110642433_init.Designer.cs">
       <DependentUpon>201607110642433_init.cs</DependentUpon>
@@ -298,6 +299,7 @@
     <Content Include="Views\MyListing\Create.cshtml" />
     <Content Include="Views\MyListing\Delete.cshtml" />
     <Content Include="Views\Listing\Error.cshtml" />
+    <Content Include="Views\Home\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\" />

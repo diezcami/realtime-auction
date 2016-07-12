@@ -22,6 +22,14 @@
     </div>
     <div id="content">
         @RenderBody()
+        @RenderSection("scripts", required: false)
     </div>
 </body>
 </html>
+
+@section scripts {
+    
+    <!--Script references. -->
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+
+}
