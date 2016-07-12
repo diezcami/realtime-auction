@@ -109,10 +109,9 @@ namespace eBae_MVC.Controllers
                                 //hub.Send("boss", "yahu it works");
 
                                 var context = GlobalHost.ConnectionManager.GetHubContext<AuctionHub>();
-                                //context.Clients.All.addBidToPage(bid.User.Username, bid.Amount.ToString(), bid.Timestamp.ToString());
-                                context.Clients.All.addBidToPage("ey", "ey1", "ey2");
+                                context.Clients.All.addBidToPage(bid.User.Username, bid.Amount.ToString(), bid.Timestamp.ToString());
 
-                                return RedirectToAction("Details");
+                                return null;
                             }
                             else
                             {
