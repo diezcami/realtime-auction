@@ -47,12 +47,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EndTimestamp)
             </td>
-            <td><center>
-                @Html.ActionLink("View", "Details", "Listing", new { id = item.ListingID }, new { @class = "button" })
-                <!-- @Html.ActionLink("Edit", "Edit", new { id = item.ListingID }, new { @class = "button" }) -->
-                @Html.ActionLink("Delete", "Delete", new { id = item.ListingID }, new { @class = "button" })
+            <td width="150">
+                <center>
+                    @Html.ActionLink("View", "Details", "Listing", new { id = item.ListingID }, new { @class = "button" })
+                    <!-- @Html.ActionLink("Edit", "Edit", new { id = item.ListingID }, new { @class = "button" }) -->
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ListingID }, new { @class = "button" })
                 </center>
-           </td>
+            </td>
         </tr>
     }
 
@@ -83,7 +84,7 @@
             <td>
                 <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="150">
             </td>
-            <td width="35%" style="text-align: justify;">
+            <td width="400" style="text-align: justify;">
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
@@ -105,7 +106,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EndTimestamp)
             </td>
-            <td>
+            <td width="150">
                 <center>
                     @Html.ActionLink("View", "Details", "Listing", new { id = item.ListingID }, new { @class = "button" })
                     <!-- @Html.ActionLink("Edit", "Edit", new { id = item.ListingID }, new { @class = "button" }) -->
