@@ -10,7 +10,6 @@
 </div>
 
 @section scripts {
-
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
     <!--Reference the SignalR library. -->
     <script src="~/Scripts/jquery.signalr-2.2.0.min.js"></script>
@@ -22,12 +21,15 @@
         $(function () {
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.auctionHub;
+
             // Create a function that the hub can call back to display messages.
             chat.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
-                $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                $('#discussion').append('<li><strong>' + name
+                    + '</strong>: ' + message + '</li>');
             };
+
+
             // Get the user name and store it to prepend to messages.
             $('#displayname').val(prompt('Enter your name:', ''));
             // Set initial focus to message input box.
@@ -42,10 +44,5 @@
                 });
             });
         });
-        // This optional function html-encodes messages for display in the page.
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
-        }
     </script>
 }

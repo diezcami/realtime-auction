@@ -15,6 +15,7 @@ namespace eBae_MVC
         {
             HttpContext context = HttpContext.Current;
 
+
             if (context != null && context.Session != null)
             {
                 Session["CurrentUsername"] = "";
@@ -26,6 +27,14 @@ namespace eBae_MVC
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            /*
+            HttpConfiguration config = GlobalConfiguration.Configuration;
+
+            config.Formatters.JsonFormatter
+            .SerializerSettings
+            .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            */
+
             
         }
     }

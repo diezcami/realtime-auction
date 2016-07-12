@@ -5,10 +5,9 @@ namespace eBae_MVC
 {
     public class AuctionHub : Hub
     {
-        public void Send(string name, string message)
+        public void Send(string user, string amount, string timestamp)
         {
-            // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(name, message);
+            Clients.All.addBidToPage(user, amount, timestamp);
         }
     }
 }

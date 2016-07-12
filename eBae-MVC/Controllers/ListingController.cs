@@ -9,6 +9,8 @@ using eBae_MVC.Models;
 using eBae_MVC.DAL;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNet.SignalR;
 
 namespace eBae_MVC.Controllers
 {
@@ -84,14 +86,14 @@ namespace eBae_MVC.Controllers
                     foreach (var b in listing.Bids.OrderByDescending(l => l.Timestamp).Take(1))
                         latestBid = b;
                     // Can't bid on finished auctions                   
-                    if (listing.EndTimestamp.Subtract(DateTime.Now).Seconds > 0) 
+                    if (listing.EndTimestamp.Subtract(DateTime.Now).Seconds > 0)
                     {
                         // Can't bid on the same auction twice
-                        if (latestBid == null || latestBid.UserID != Convert.ToInt32(Session["CurrentUserID"])) 
+                        if (latestBid == null || latestBid.UserID != Convert.ToInt32(Session["CurrentUserID"]))
                         {
                             // Amount must be greater than the last bid and starting big
-                            if (( latestBid == null && bid.Amount >= listing.StartingPrice ) || 
-                                ( latestBid != null && bid.Amount > latestBid.Amount ))
+                            if ((latestBid == null && bid.Amount >= listing.StartingPrice) ||
+                                (latestBid != null && bid.Amount > latestBid.Amount))
                             {
                                 bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
                                 bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
@@ -102,14 +104,22 @@ namespace eBae_MVC.Controllers
                                 db.Bids.Add(bid);
                                 db.SaveChanges();
 
+                                DefaultHubManager hd = new DefaultHubManager(GlobalHost.DependencyResolver);
+                                //var hub = hd.ResolveHub("AuctionHub") as AuctionHub;
+                                //hub.Send("boss", "yahu it works");
+
+                                var context = GlobalHost.ConnectionManager.GetHubContext<AuctionHub>();
+                                //context.Clients.All.addBidToPage(bid.User.Username, bid.Amount.ToString(), bid.Timestamp.ToString());
+                                context.Clients.All.addBidToPage("ey", "ey1", "ey2");
+
                                 return RedirectToAction("Details");
                             }
                             else
                             {
                                 return RedirectToAction("Error", new { ErrorID = 5 });
                             }
-                        } 
-                        else 
+                        }
+                        else
                         {
                             return RedirectToAction("Error", new { ErrorID = 4 });
                         }
@@ -124,7 +134,9 @@ namespace eBae_MVC.Controllers
                     return RedirectToAction("Error", new { ErrorID = 2 });
                 }
             }
+            
             return RedirectToAction("Error", new { ErrorID = 1 });
+            
         }
 
         protected override void Dispose(bool disposing)
