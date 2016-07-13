@@ -1,0 +1,40 @@
+﻿@model IEnumerable<eBae_MVC.Models.ClosingHistory>
+
+<h2>Purchase History</h2>
+<table style="width: 95%" class="display" align="center">
+    <tr>
+        <th>Listing Name</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Final Price</th>
+        <th>Date won</th>
+        <th>Owner</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Listing.Title)
+            </td>
+            <td>
+                <img src="@Html.DisplayFor(modelItem => item.Listing.ImageUrl)" width="150">
+            </td>
+            <td width="35%" style="text-align: justify;">
+                @Html.DisplayFor(modelItem => item.Listing.Description)
+            </td>
+            <td>
+                PHP @Html.DisplayFor(modelItem => item.Bid.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Listing.EndTimestamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Listing.User.Username)
+            </td>
+            <td width="130"><center>@Html.ActionLink("View Listing", "Details", "Listing", new { id = item.ListingID }, new { @class = "button" })</center></td>
+        </tr>
+    }
+
+</table>

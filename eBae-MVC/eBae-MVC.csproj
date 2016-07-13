@@ -157,6 +157,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Constant.cs" />
+    <Compile Include="Controllers\ClosingHistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListingController.cs" />
     <Compile Include="Controllers\MyListingController.cs" />
@@ -299,6 +300,7 @@
     <Content Include="Views\MyListing\Create.cshtml" />
     <Content Include="Views\MyListing\Delete.cshtml" />
     <Content Include="Views\Listing\Error.cshtml" />
+    <Content Include="Views\ClosingHistory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\" />

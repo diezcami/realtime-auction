@@ -16,14 +16,18 @@
 <body>
     <div id="nav">
         <a href="#">Hello, @ViewBag.CurrentUsername!</a>
-        <a href="/Listing">Browse Listings</a>
+        <a href="/Listing">Browse Auctions</a>
         <a href="/MyListing">My Auctions</a>
+        <a href="/ClosingHistory">Purchase History</a>
         <a href="/">Log Out</a>
     </div>
     <div id="content">
         @RenderBody()
         @RenderSection("scripts", required: false)
     </div>
+    <p align="center">
+        Made by Cami Diez 2016
+    </p><br /><br />
 </body>
 </html>
 
