@@ -106,12 +106,8 @@ namespace eBae_MVC.Controllers
                                 db.SaveChanges();
 
                                 DefaultHubManager hd = new DefaultHubManager(GlobalHost.DependencyResolver);
-                                //var hub = hd.ResolveHub("AuctionHub") as AuctionHub;
-                                //hub.Send("boss", "yahu it works");
-
                                 var context = GlobalHost.ConnectionManager.GetHubContext<AuctionHub>();
-                                context.Clients.All.addBidToPage(bid.User.Username, bid.Amount.ToString(), bid.Timestamp.ToString());
-
+                                context.Clients.All.addBidToPage(bid.User.Username, bid.Amount.ToString(), bid.Timestamp.ToString(), bid.ListingID.ToString());
                                 return View(listing);
                             }
                             else

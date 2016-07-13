@@ -128,14 +128,17 @@ View the realtime bid history for this listing.
             $("#currentPrice").append(@ViewBag.CurrentPrice);
 
             // Create a function that the hub can call back to display bids.
-            auction.client.addBidToPage = function (user, amount, timestamp) {
-                // Add the bid to the page
-                var row = '<td>' + user + '</td><td>' + amount + '</td><td>' + timestamp + '</td>';
-                $("#bidHistory tbody").prepend(row)
+            auction.client.addBidToPage = function (user, amount, timestamp, listingid) {
+                if (listingid == @Html.Raw(Json.Encode(Model.ListingID.ToString()))) 
+                {
+                    // Add the bid to the page
+                    var row = '<td>' + user + '</td><td>' + amount + '</td><td>' + timestamp + '</td>';
+                    $("#bidHistory tbody").prepend(row);
 
-                // Refresh current price label
-                $("#currentPrice").empty();
-                $("#currentPrice").append(amount);
+                    // Refresh current price label
+                    $("#currentPrice").empty();
+                    $("#currentPrice").append(amount);
+                }
             };
         });
 
