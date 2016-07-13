@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<eBae_MVC.Models.Listing>
 
 @{
-    ViewBag.Title = "My Listings";
+    ViewBag.Title = "My Active Listings";
 }
 
 <h2>@ViewBag.Title</h2>
-<table class="display" width="80%" align="center">
+<table class="display" style="width: 95%" align="center">
     <tr>
         <th>Listing Name</th>
         <th>Image</th>
@@ -29,7 +29,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @if (item.Bids.Count > 0) { 
+                PHP
+                @if (item.Bids.Count > 0)
+                {
                     foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
                     {
                         @Html.DisplayFor(b => bid.Amount)
@@ -38,8 +40,7 @@
                 else
                 {
                     @Html.DisplayFor(modelItem => item.StartingPrice)
-                }
-                
+                }.00
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartTimestamp)
@@ -63,8 +64,8 @@
 </center>
 <br />
 <br />
-<h2>Expired Listings</h2>
-<table class="display" width="80%" align="center">
+<h2>My Expired Listings</h2>
+<table class="display" style="width: 95%" align="center">
     <tr>
         <th>Listing Name</th>
         <th>Image</th>
@@ -92,12 +93,12 @@
                 {
                     foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
                     {
-                        @Html.DisplayFor(b => bid.Amount)
+                        <text>PHP </text>@Html.DisplayFor(b => bid.Amount)<text>.00</text>
                     }
                 }
                 else
                 {
-                    <text>No bids placed :(</text>
+                    <text>N/A</text>
                 }
             </td>
             <td>

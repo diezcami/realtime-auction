@@ -4,8 +4,8 @@
     ViewBag.Title = "Browse Listings";
 }
 
-<h2>Browse Listings</h2>
-<table class="display" width="80%" align="center">
+<h2>Active Listings</h2>
+<table style="width: 95%" class="display" align="center">
     <tr>
         <th>Listing Name</th>
         <th>Image</th>
@@ -27,7 +27,7 @@
         <td width="35%" style="text-align: justify;">
             @Html.DisplayFor(modelItem => item.Description)
         </td>
-        <td>
+        <td>PHP 
             @if (item.Bids.Count > 0)
             {
                 foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
@@ -38,7 +38,7 @@
             else
             {
                 @Html.DisplayFor(modelItem => item.StartingPrice)
-            }
+            }.00
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StartTimestamp)
@@ -57,7 +57,7 @@
 
 <br /><br />
 <h2>Expired Listings</h2>
-<table class="display" width="80%" align="center">
+<table class="display" style="width: 95%" align="center">
     <tr>
         <th>Listing Name</th>
         <th>Image</th>
@@ -86,7 +86,7 @@
                 {
                     foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
                     {
-                        @Html.DisplayFor(b => bid.Amount)
+                        <text>PHP </text>@Html.DisplayFor(b => bid.Amount)<text>.00</text>
                     }
                 }
                 else
@@ -97,7 +97,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StartTimestamp)
             </td>
-            
+
             <td>
                 @Html.DisplayFor(modelItem => item.EndTimestamp)
             </td>

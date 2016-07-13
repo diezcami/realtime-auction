@@ -85,6 +85,17 @@ namespace eBae_MVC.Controllers
                             if ((latestBid == null && bid.Amount >= listing.StartingPrice) ||
                                 (latestBid != null && bid.Amount > latestBid.Amount))
                             {
+
+                                if (latestBid == null)
+                                {
+                                    ViewBag.CurrentPrice = listing.StartingPrice;
+                                }
+                                else
+                                {
+                                    ViewBag.CurrentPrice = bid.Amount;
+                                }
+
+
                                 bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
                                 bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
                                 bid.ListingID = Convert.ToInt32(Session["CurrentListingID"]);
@@ -101,7 +112,7 @@ namespace eBae_MVC.Controllers
                                 var context = GlobalHost.ConnectionManager.GetHubContext<AuctionHub>();
                                 context.Clients.All.addBidToPage(bid.User.Username, bid.Amount.ToString(), bid.Timestamp.ToString());
 
-                                return null;
+                                return View(listing);
                             }
                             else
                             {
