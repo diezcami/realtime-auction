@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using eBae_MVC.Models;
 using eBae_MVC.DAL;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR;
 

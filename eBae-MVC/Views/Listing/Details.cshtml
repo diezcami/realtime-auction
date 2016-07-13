@@ -122,7 +122,6 @@ View the realtime bid history for this listing.
     <script>
         $(function () {
             // Reference the auto-generated proxy for the hub.
-            $.connection.hub.logging = true;
             $.connection.hub.start().done(function () { });
             var auction = $.connection.auctionHub;
 
