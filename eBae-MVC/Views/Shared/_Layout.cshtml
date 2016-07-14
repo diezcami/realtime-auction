@@ -58,4 +58,25 @@
     <!--Script references. -->
     <script src="~/Scripts/jquery-1.9.1.min.js"></script>
 
+    <script>
+        function initializeNumberBar(id) {
+            var numbers = document.getElementById(id);
+            var leaderSpan = numbers.querySelector('.leader');
+            var outbidSpan = numbers.querySelector('.outbid');
+            var wonSpan = numbers.querySelector('.won');
+            var lostSpan = numbers.querySelector('.lost');
+
+            function updateNumberBar() {
+                leaderSpan.innerHTML = @ViewBag.Leader;
+                outbidSpan.innerHTML = @ViewBag.Outbid;
+                wonSpan.innerHTML = @ViewBag.Won;
+                lostSpan.innerHTML = @ViewBag.Lost;
+            }
+
+            updateNumberBar();
+            var timeinterval = setInterval(updateNumberBar, 1000);
+        }
+
+        initializeNumberBar(statusdiv);
+    </script>
 }
