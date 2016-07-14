@@ -26,20 +26,20 @@
         <a href="/">Log Out</a>
     </div>
     <div id="statusdiv">
-        <div>
-            <span class="leader">@ViewBag.Leader</span>
+        <div class="col">
+            <span class="leader"></span>
             <div class="smalltext">Leader</div>
         </div>
-        <div>
-            <span class="outbid">@ViewBag.Outbid</span>
+        <div class="col">
+            <span class="outbid"></span>
             <div class="smalltext">Outbid</div>
         </div>
-        <div>
-            <span class="won">@ViewBag.Won</span>
+        <div class="col">
+            <span class="won"></span>
             <div class="smalltext">Won</div>
         </div>
-        <div>
-            <span class="lost">@ViewBag.Lost</span>
+        <div class="col">
+            <span class="lost"></span>
             <div class="smalltext">Lost</div>
         </div>
     </div>
@@ -50,13 +50,6 @@
     <p align="center">
         Made by Cami Diez 2016
     </p><br /><br />
-</body>
-</html>
-
-@section scripts {
-    
-    <!--Script references. -->
-    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
 
     <script>
         function initializeNumberBar(id) {
@@ -66,17 +59,43 @@
             var wonSpan = numbers.querySelector('.won');
             var lostSpan = numbers.querySelector('.lost');
 
-            function updateNumberBar() {
-                leaderSpan.innerHTML = @ViewBag.Leader;
-                outbidSpan.innerHTML = @ViewBag.Outbid;
-                wonSpan.innerHTML = @ViewBag.Won;
-                lostSpan.innerHTML = @ViewBag.Lost;
+            function updateNumberBar(leader, outbid, won, lost) {
+                console.log(leader);
+                leaderSpan.innerHTML = leader;
+                outbidSpan.innerHTML = outbid;
+                wonSpan.innerHTML = won;
+                lostSpan.innerHTML = lost;
             }
 
-            updateNumberBar();
-            var timeinterval = setInterval(updateNumberBar, 1000);
+            function camiejninamarkgabbykeith() {
+                $.ajax({
+                    url: '/Home/RefreshViews',
+                    dataType: 'json',
+                    type: 'post',
+                    contentType: 'application/json',
+                    success: function (res) {
+                        //alert("ei ajax");
+                        var arr = [];
+                        for (var prop in res) {
+                            arr.push(res[prop]);
+                        }
+                        console.log(arr);
+
+                        console.log(typeof res);
+                        console.log(typeof res.leader);
+                        updateNumberBar(arr[0], arr[1], arr[2], arr[3]);
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
+            camiejninamarkgabbykeith();
+            var timeinterval = setInterval(camiejninamarkgabbykeith, 1000);
         }
 
-        initializeNumberBar(statusdiv);
+        initializeNumberBar("statusdiv");
     </script>
-}
+    
+    </body>
+</html>

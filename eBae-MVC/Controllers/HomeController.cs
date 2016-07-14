@@ -14,6 +14,44 @@ namespace eBae_MVC.Controllers
         // GET: /Home/
         private AuctionContext db = new AuctionContext();
 
+        [HttpPost]
+        public ActionResult RefreshViews()
+        {
+            var ai = new AuctionInfo();
+
+            int userID = Convert.ToInt32(Session["CurrentUserID"]);
+            // Active listings user participated in
+            var listings = db.Listings.Where(l => l.EndTimestamp > DateTime.Now && l.Bids.Any(b => b.UserID == userID));
+            // Get all the first bids from the listings
+            var listingCount = listings.Count();
+            var leader = 0;
+            foreach (var listing in listings)
+            {
+                foreach (var b in listing.Bids.OrderByDescending(l => l.Timestamp).Take(1))
+                {
+                    if (b.UserID == userID)
+                    {
+                        leader += 1;
+                    }
+                }
+            }
+            // Count bids where user's the winner
+
+            ai.Leader = leader;
+            ai.Outbid = listingCount - leader;
+
+            // Finished listings won in
+            ai.Won = db.ClosingHistories.Where(ch => ch.User.UserID == userID).Count();
+
+            // Closing histories users don't own and lost in
+            var relevantHistories = db.ClosingHistories.Where(ch => ch.UserID != userID && ch.Listing.UserID != userID);
+            // Finished listings where user placed bids
+            var lost = relevantHistories.Select(ch => ch.Listing).Where(l => l.Bids.Any(b => b.UserID == userID)).Count();
+            ai.Lost = lost;
+
+            return Json(ai);
+        }
+
         public ActionResult Index()
         {
             return View();
