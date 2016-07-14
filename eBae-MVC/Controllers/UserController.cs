@@ -52,9 +52,12 @@ namespace eBae_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                if (!db.Users.Any(u => u.Username == user.Username))
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
             return View(user);

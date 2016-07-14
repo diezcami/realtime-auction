@@ -1,6 +1,7 @@
 ﻿body {
     font-family: 'Open Sans', sans-serif;
     color: #222;
+    text-align: center;
 }
 
 h1, h2, h3 {
@@ -98,4 +99,53 @@ select {
 
 #clockdiv > span{
     font-weight: bold;
+}
+
+#statusdiv{
+	font-family: sans-serif;
+	color: #fff;
+    background: #f6f6f6;
+	display: inline-block;
+	font-weight: 100;
+	text-align: center;
+	font-size: 14px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+#statusdiv > div{
+	padding: 10px;
+	border-radius: 3px;
+	display: inline-block;
+    width: 80px;
+}
+
+#statusdiv div > span{
+	padding: 5px;
+	border-radius: 3px;
+	display: inline-block;
+    width: 35px;
+    font-weight: bold;
+}
+
+.leader {
+    background: #7bc043;
+}
+
+.outbid {
+    background: #ee4035;
+}
+
+.won {
+    background: #0392cf;
+}
+
+.lost {
+    background: #ffbf00;
+}
+
+.smalltext{
+	padding-top: 5px;
+	font-size: 14px;
+    color: #333;
 }

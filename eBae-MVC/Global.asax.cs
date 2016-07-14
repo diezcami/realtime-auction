@@ -28,6 +28,10 @@ namespace eBae_MVC
             {
                 Session["CurrentUsername"] = "";
                 Session["CurrentUserID"] = 0;
+                Session["Leader"] = 0;
+                Session["Outbid"] = 0;
+                Session["Won"] = 0;
+                Session["Lost"] = 0;
             }
             
             AreaRegistration.RegisterAllAreas();

@@ -2,6 +2,10 @@
 @{
     ViewBag.CurrentUsername = Session["CurrentUsername"];
     ViewBag.CurrentUserID = Session["CurrentUserID"];
+    ViewBag.Leader = Session["Leader"].ToString();
+    ViewBag.Outbid = Session["Outbid"].ToString();
+    ViewBag.Won = Session["Won"].ToString();
+    ViewBag.Lost = Session["Lost"].ToString();
 }
 <html>
 <head>
@@ -20,6 +24,24 @@
         <a href="/MyListing">My Auctions</a>
         <a href="/ClosingHistory">Purchase History</a>
         <a href="/">Log Out</a>
+    </div>
+    <div id="statusdiv">
+        <div>
+            <span class="leader">@ViewBag.Leader</span>
+            <div class="smalltext">Leader</div>
+        </div>
+        <div>
+            <span class="outbid">@ViewBag.Outbid</span>
+            <div class="smalltext">Outbid</div>
+        </div>
+        <div>
+            <span class="won">@ViewBag.Won</span>
+            <div class="smalltext">Won</div>
+        </div>
+        <div>
+            <span class="lost">@ViewBag.Lost</span>
+            <div class="smalltext">Lost</div>
+        </div>
     </div>
     <div id="content">
         @RenderBody()
