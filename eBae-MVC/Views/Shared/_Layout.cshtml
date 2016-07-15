@@ -2,15 +2,12 @@
 @{
     ViewBag.CurrentUsername = Session["CurrentUsername"];
     ViewBag.CurrentUserID = Session["CurrentUserID"];
-    ViewBag.Leader = Session["Leader"].ToString();
-    ViewBag.Outbid = Session["Outbid"].ToString();
-    ViewBag.Won = Session["Won"].ToString();
-    ViewBag.Lost = Session["Lost"].ToString();
 }
 <html>
 <head>
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/Content/jquery.datetimepicker.css" />
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700' rel='stylesheet' type='text/css' />
@@ -79,10 +76,7 @@
                         for (var prop in res) {
                             arr.push(res[prop]);
                         }
-                        console.log(arr);
 
-                        console.log(typeof res);
-                        console.log(typeof res.leader);
                         updateNumberBar(arr[0], arr[1], arr[2], arr[3]);
                     },
                     error: function (jqXhr, textStatus, errorThrown) {

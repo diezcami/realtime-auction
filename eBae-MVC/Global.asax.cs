@@ -24,17 +24,11 @@ namespace eBae_MVC
             context = HttpContext.Current;
 
             AddTask("RefreshBids", 10);
-            //AddTask("RefreshNumberBar", 5);
 
             if (context != null && context.Session != null)
             {
                 Session["CurrentUsername"] = "";
                 Session["CurrentUserID"] = 0;
-                Session["Leader"] = 0;
-                Session["Outbid"] = 0;
-                Session["Won"] = 0;
-                Session["Lost"] = 0;
-                
             }
             
             AreaRegistration.RegisterAllAreas();
@@ -87,39 +81,7 @@ namespace eBae_MVC
 
                 db.SaveChanges();
             } 
-            else if (k.Equals("RefreshNumberBar"))
-            {
-                int userID = Convert.ToInt32(Session["CurrentUserID"]);
-                // Active listings user participated in
-                var listings = db.Listings.Where(l => l.EndTimestamp > DateTime.Now && l.Bids.Any(b => b.UserID == userID));
-                // Get all the first bids from the listings
-                var listingCount = listings.Count();
-                var leader = 0;
-                foreach (var listing in listings)
-                {
-                    foreach (var b in listing.Bids.OrderByDescending(l => l.Timestamp).Take(1))
-                    {
-                        if (b.UserID == userID)
-                        {
-                            leader += 1;
-                        }
-                    }
-                }
-                // Count bids where user's the winner
-
-                Session["Leader"] = leader;
-                Session["Outbid"] = listingCount - leader;
-
-                // Finished listings won in
-                Session["Won"] = db.ClosingHistories.Where(ch => ch.User.UserID == userID).Count();
-
-                // Closing histories users don't own and lost in
-                var relevantHistories = db.ClosingHistories.Where(ch => ch.UserID != userID && ch.Listing.UserID != userID);
-                // Finished listings where user placed bids
-                var lost = relevantHistories.Select(ch => ch.Listing).Where(l => l.Bids.Any(b => b.UserID == userID)).Count();
-                Session["Lost"] = lost;
-            }
-            
+           
             AddTask(k, Convert.ToInt32(v));
         }
     }
