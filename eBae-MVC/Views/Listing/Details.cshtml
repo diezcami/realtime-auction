@@ -32,7 +32,7 @@
                         <tr>
                             <td style="text-align: left;"><strong>Current Price</strong></td>
                             <td style="text-align: left;">
-                                <strong>PHP </strong><label id="currentPrice"></label><strong>.00</strong>
+                                <strong>PHP </strong><label id="currentPrice">@ViewBag.CurrentPrice</label><strong>.00</strong>
                             </td>
                         </tr>
                         <tr>
@@ -124,8 +124,7 @@ View the realtime bid history for this listing.
             // Reference the auto-generated proxy for the hub.
             $.connection.hub.start().done(function () { });
             var auction = $.connection.auctionHub;
-            $("#currentPrice").empty();
-            $("#currentPrice").append(@ViewBag.CurrentPrice);
+
 
             // Create a function that the hub can call back to display bids.
             auction.client.addBidToPage = function (user, amount, timestamp, listingid) {
@@ -174,8 +173,7 @@ View the realtime bid history for this listing.
 
                 if (t.total <= 0) {
                     clearInterval(timeinterval);
-                    alert("Auction has ended! The page will be refreshed.");
-                    location.reload();
+                    alert("Auction has ended! Please refresh the page.");
                 }
             }
 

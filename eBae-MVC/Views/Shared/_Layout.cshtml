@@ -2,17 +2,20 @@
 @{
     ViewBag.CurrentUsername = Session["CurrentUsername"];
     ViewBag.CurrentUserID = Session["CurrentUserID"];
+    ViewBag.OldWon = Session["OldWon"];
+    ViewBag.OldLost = Session["OldLost"];
 }
 <html>
 <head>
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/Content/jquery.datetimepicker.css" />
+    <link rel="stylesheet" href="/Content/toastr.css" />
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700' rel='stylesheet' type='text/css' />
     <script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")" type="text/javascript"></script>
-
+    <script src="@Url.Content("~/Scripts/toastr.js")" type="text/javascript"></script>
 </head>
 <body>
     <div id="nav">
@@ -55,13 +58,47 @@
             var outbidSpan = numbers.querySelector('.outbid');
             var wonSpan = numbers.querySelector('.won');
             var lostSpan = numbers.querySelector('.lost');
+            var firstTime = true;
+
+            var oldLeader;
+            var oldOutbid;
+            var oldWon;
+            var oldLost;
 
             function updateNumberBar(leader, outbid, won, lost) {
-                console.log(leader);
+                // Set old variables
+                oldLeader = leaderSpan.innerHTML;
+                oldOutbid = outbidSpan.innerHTML;
+                oldWon = wonSpan.innerHTML;
+                oldLost = lostSpan.innerHTML;
+
+                // Set new variables
+                
                 leaderSpan.innerHTML = leader;
                 outbidSpan.innerHTML = outbid;
                 wonSpan.innerHTML = won;
                 lostSpan.innerHTML = lost;
+
+
+            }
+
+            function showNotifications(leader, outbid, won, lost) {
+                if (!firstTime) {
+                    if (oldLeader > leader && oldOutbid < outbid) {
+                        toastr.warning("You just got outbid in one of your auctions.", "Outbid");
+                    }
+
+                    if (won > oldWon) {
+                        toastr.success("You just won an auction! Check your purchase history.", "Congratulations!");
+                    }
+
+                    if (lost > oldLost) {
+                        toastr.error("You just lost an auction. Better luck next time!", "Sorry :(");
+
+                    }
+                }
+ 
+                firstTime = false;
             }
 
             function camiejninamarkgabbykeith() {
@@ -76,8 +113,12 @@
                         for (var prop in res) {
                             arr.push(res[prop]);
                         }
+                        
 
                         updateNumberBar(arr[0], arr[1], arr[2], arr[3]);
+                        showNotifications(arr[0], arr[1], arr[2], arr[3]);
+                        
+                        
                     },
                     error: function (jqXhr, textStatus, errorThrown) {
                         console.log(errorThrown);

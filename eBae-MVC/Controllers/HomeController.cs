@@ -45,9 +45,13 @@ namespace eBae_MVC.Controllers
 
             // Closing histories users don't own and lost in
             var relevantHistories = db.ClosingHistories.Where(ch => ch.UserID != userID && ch.Listing.UserID != userID);
+            
             // Finished listings where user placed bids
             var lost = relevantHistories.Select(ch => ch.Listing).Where(l => l.Bids.Any(b => b.UserID == userID)).Count();
             ai.Lost = lost;
+
+            //Session["OldWon"] = ai.Won;
+            //Session["OldLost"] = ai.Lost;
 
             return Json(ai);
         }
