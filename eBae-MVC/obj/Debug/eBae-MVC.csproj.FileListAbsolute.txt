@@ -5,7 +5,6 @@ C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\eBae-MVC.pdb
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Antlr3.Runtime.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\EntityFramework.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Newtonsoft.Json.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\System.Net.Http.Formatting.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\System.Web.Http.dll
@@ -33,3 +32,17 @@ C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Owin.dll
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Owin.xml
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae_MVC.Migrations.init.resources
 C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\obj\Debug\eBae-MVC.csproj.GenerateResource.Cache
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Owin.dll
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Owin.Security.dll
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\System.Web.Helpers.dll
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Microsoft.Owin.Security.xml
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\System.Web.Helpers.xml
+C:\Users\Camille\Desktop\eBae-MVC\eBae-MVC\bin\Newtonsoft.Json.xml

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using eBae_MVC.Models;
 using eBae_MVC.DAL;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
+using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNet.SignalR;
 
 namespace eBae_MVC.Controllers
 {
@@ -50,13 +47,7 @@ namespace eBae_MVC.Controllers
                 ViewBag.CurrentPrice = latestBid.Amount;
             }
 
-
             Session["CurrentListingID"] = id;
-            ViewBag.Image = Url.Content("~/Content/Images/" + id.ToString() + ".jpg");
-            ViewBag.DaysRemaining = (listing.EndTimestamp - DateTime.Now).Days;
-            ViewBag.HoursRemaining = (listing.EndTimestamp - DateTime.Now).Hours;
-            ViewBag.MinutesRemaining = (listing.EndTimestamp - DateTime.Now).Minutes;
-            ViewBag.SecondsRemaining = (listing.EndTimestamp - DateTime.Now).Seconds;
             return View(listing);
         }
 
@@ -67,6 +58,7 @@ namespace eBae_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Details(Bid bid)
         {
+            
             int currentListingID = Convert.ToInt32(Session["CurrentListingID"]);
             Listing currentListingOwner = db.Listings.FirstOrDefault(l => l.ListingID == currentListingID);
             int currentListingOwnerID = currentListingOwner.UserID;
@@ -84,15 +76,26 @@ namespace eBae_MVC.Controllers
                     foreach (var b in listing.Bids.OrderByDescending(l => l.Timestamp).Take(1))
                         latestBid = b;
                     // Can't bid on finished auctions                   
-                    if (listing.EndTimestamp.Subtract(DateTime.Now).Seconds > 0) 
+                    if (listing.EndTimestamp.Subtract(DateTime.Now).Seconds > 0)
                     {
                         // Can't bid on the same auction twice
-                        if (latestBid == null || latestBid.UserID != Convert.ToInt32(Session["CurrentUserID"])) 
+                        if (latestBid == null || latestBid.UserID != Convert.ToInt32(Session["CurrentUserID"]))
                         {
                             // Amount must be greater than the last bid and starting big
-                            if (( latestBid == null && bid.Amount >= listing.StartingPrice ) || 
-                                ( latestBid != null && bid.Amount > latestBid.Amount ))
+                            if ((latestBid == null && bid.Amount >= listing.StartingPrice) ||
+                                (latestBid != null && bid.Amount > latestBid.Amount))
                             {
+
+                                if (latestBid == null)
+                                {
+                                    ViewBag.CurrentPrice = listing.StartingPrice;
+                                }
+                                else
+                                {
+                                    ViewBag.CurrentPrice = bid.Amount;
+                                }
+
+
                                 bid.UserID = Convert.ToInt32(Session["CurrentUserID"]);
                                 bid.User = db.Users.FirstOrDefault(u => u.UserID == bid.UserID);
                                 bid.ListingID = Convert.ToInt32(Session["CurrentListingID"]);
@@ -102,14 +105,17 @@ namespace eBae_MVC.Controllers
                                 db.Bids.Add(bid);
                                 db.SaveChanges();
 
-                                return RedirectToAction("Details");
+                                DefaultHubManager hd = new DefaultHubManager(GlobalHost.DependencyResolver);
+                                var context = GlobalHost.ConnectionManager.GetHubContext<AuctionHub>();
+                                context.Clients.All.addBidToPage(bid.User.Username, bid.Amount.ToString(), bid.Timestamp.ToString(), bid.ListingID.ToString());
+                                return View(listing);
                             }
                             else
                             {
                                 return RedirectToAction("Error", new { ErrorID = 5 });
                             }
-                        } 
-                        else 
+                        }
+                        else
                         {
                             return RedirectToAction("Error", new { ErrorID = 4 });
                         }
@@ -124,7 +130,9 @@ namespace eBae_MVC.Controllers
                     return RedirectToAction("Error", new { ErrorID = 2 });
                 }
             }
+            
             return RedirectToAction("Error", new { ErrorID = 1 });
+            
         }
 
         protected override void Dispose(bool disposing)
@@ -135,6 +143,8 @@ namespace eBae_MVC.Controllers
 
         public ActionResult Error(int ErrorID)
         {
+            ViewBag.CurrentListingID = Convert.ToInt32(Session["CurrentListingID"]);
+
             switch (ErrorID)
             {
                 case 1:

@@ -5,5 +5,5 @@
 <h2>Bid Error</h2>
 @ViewBag.ErrorText
 <center>
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "button" })
+    @Html.ActionLink("Back to Listing", "Details", new { id = ViewBag.CurrentListingID }, new { @class = "button" })
 </center>

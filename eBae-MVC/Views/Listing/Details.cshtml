@@ -5,10 +5,10 @@
 }
 
 <h2>View Listing: @Html.DisplayFor(model => model.Title)</h2>
-<table style="width: 90%;" align="center" valign="top">
+<table style="width: 95%;" align="center">
     <tbody>
         <tr>
-            <td width="400">
+            <td>
                 <table><tbody>
                         <tr>
                             <td><img src="@Html.DisplayFor(model => model.ImageUrl)" width="400" /></td>
@@ -26,32 +26,50 @@
                     </tbody>
                 </table>
             </td>
-            <td style="width: 30%; vertical-align: top;" valign="top">
+            <td style="vertical-align: top;" valign="top">
                 <table style="width: 100%">
                     <tbody>
                         <tr>
                             <td style="text-align: left;"><strong>Current Price</strong></td>
-                            <td style="text-align: left;">@ViewBag.CurrentPrice</td>
+                            <td style="text-align: left;">
+                                <strong>PHP </strong><label id="currentPrice">@ViewBag.CurrentPrice</label><strong>.00</strong>
+                            </td>
                         </tr>
                         <tr>
                             <td style="text-align: left;"><strong>Enter Amount</strong></td>
                             <td style="text-align: left;">
-                                @using (Html.BeginForm())
+                                @if (Model.EndTimestamp.Subtract(DateTime.Now).Seconds > 0)
                                 {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true)
-                                    <input id="amount" name="amount" type="text" placeholder="" class="form-control input-md" required="" style="display: inline; width: 60%">
-                                    <input type="submit" value="Bid!" class="button"/>
+                                    using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true)
+                                        <input id="amount" name="amount" type="text" placeholder="" class="form-control input-md" required="" style="display: inline; width: 60%">
+                                        <input type="submit" value="Bid!" class="button"/>
+                                    }
+                                }
+                                else
+                                {
+                                    <b>You cannot bid on this listing.</b>
                                 }
                             </td>
                         </tr>
                         <tr>
                             <td style="text-align: left;"><strong>Time Remaining</strong></td>
                             <td style="text-align: left;">
-                                @ViewBag.DaysRemaining days, 
-                                @ViewBag.HoursRemaining hours,
-                                @ViewBag.MinutesRemaining minutes and
-                                @ViewBag.SecondsRemaining seconds
+                                @if (Model.EndTimestamp.Subtract(DateTime.Now).Seconds > 0) 
+                                { 
+                                    <div id="clockdiv">
+                                            <span class="days"></span> days, 
+                                            <span class="hours"></span> hours, 
+                                            <span class="minutes"></span> minutes and 
+                                            <span class="seconds"></span> seconds
+                                    </div>
+                                }
+                                else
+                                {
+                                    <b>This auction is closed!</b>
+                                }
                             </td>
                         </tr>
                         <tr>
@@ -65,28 +83,108 @@
                     </tbody>
                 </table>
             </td>
-            <td style="width: 30%; vertical-align: top; text-align: left;" valign="top">
-            <h2>Bidding History</h2>
-                View the last ten bids placed for this listing.
-                <table style="width: 100%;" valign="top">
-                    <tr>
-                        <th>User</th>
-                        <th>Bid Amount</th>
-                        <th>Bid Timestamp</th>
-                    </tr>
-                    @foreach (var item in Model.Bids.OrderByDescending(b => b.Timestamp).Take(10))
-                    {
-                        <tr>
-                            <td>@Html.DisplayFor(modelItem => item.User.Username)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Timestamp)</td>
-                        </tr>
-                    }
-                </table>
-            </td>
         </tr>
     </tbody>
 </table>
 <center>
     @Html.ActionLink("Back to List", "Index", null, new { @class = "button" })
 </center>
+<h2>Previous Bids</h2>
+View the realtime bid history for this listing.
+<table style="width: 95%;" id="bidHistory">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Bid Amount</th>
+            <th>Bid Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Bids.OrderByDescending(b => b.Timestamp).Take(10))
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.User.Username)</td>
+                <td>PHP @Html.DisplayFor(modelItem => item.Amount).00</td>
+                <td>@Html.DisplayFor(modelItem => item.Timestamp)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <!--Reference the SignalR library. -->
+    <script src="~/Scripts/jquery.signalr-2.2.0.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="~/signalr/hubs"></script>
+    <!--SignalR script to update the chat page and send messages.-->
+
+    <script>
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            $.connection.hub.start().done(function () { });
+            var auction = $.connection.auctionHub;
+
+
+            // Create a function that the hub can call back to display bids.
+            auction.client.addBidToPage = function (user, amount, timestamp, listingid) {
+                if (listingid == @Html.Raw(Json.Encode(Model.ListingID.ToString())))
+                {
+                    // Add the bid to the page
+                    var row = '<td>' + user + '</td><td>PHP ' + amount + '.00</td><td>' + timestamp + '</td>';
+                    $("#bidHistory tbody").prepend(row);
+
+                    // Refresh current price label
+                    $("#currentPrice").empty();
+                    $("#currentPrice").append(amount);
+                }
+            };
+        });
+
+        function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t / 1000) % 60);
+            var minutes = Math.floor((t / 1000 / 60) % 60);
+            var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+            var days = Math.floor(t / (1000 * 60 * 60 * 24));
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };
+        }
+
+        function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var daysSpan = clock.querySelector('.days');
+            var hoursSpan = clock.querySelector('.hours');
+            var minutesSpan = clock.querySelector('.minutes');
+            var secondsSpan = clock.querySelector('.seconds');
+
+            function updateClock() {
+                var t = getTimeRemaining(endtime);
+
+                daysSpan.innerHTML = t.days;
+                hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+                if (t.total <= 0) {
+                    clearInterval(timeinterval);
+                    alert("Auction has ended! Please refresh the page.");
+                }
+            }
+
+            updateClock();
+            var timeinterval = setInterval(updateClock, 1000);
+        }
+
+        var deadline = @Html.Raw(Json.Encode(Model.EndTimestamp.ToString()))
+        initializeClock('clockdiv', deadline);
+    </script>
+
+
+}
+

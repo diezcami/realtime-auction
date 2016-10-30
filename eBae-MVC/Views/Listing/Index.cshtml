@@ -4,8 +4,8 @@
     ViewBag.Title = "Browse Listings";
 }
 
-<h2>Browse Listings</h2>
-<table class="display" width="80%" align="center">
+<h2>Active Listings</h2>
+<table style="width: 95%" class="display" align="center">
     <tr>
         <th>Listing Name</th>
         <th>Image</th>
@@ -27,7 +27,7 @@
         <td width="35%" style="text-align: justify;">
             @Html.DisplayFor(modelItem => item.Description)
         </td>
-        <td>
+        <td>PHP 
             @if (item.Bids.Count > 0)
             {
                 foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
@@ -38,7 +38,7 @@
             else
             {
                 @Html.DisplayFor(modelItem => item.StartingPrice)
-            }
+            }.00
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StartTimestamp)
@@ -52,60 +52,5 @@
         <td width="130"><center>@Html.ActionLink("View Listing", "Details", new { id = item.ListingID }, new { @class = "button" })</center></td>
     </tr>
 }
-
-</table>
-
-<br /><br />
-<h2>Expired Listings</h2>
-<table class="display" width="80%" align="center">
-    <tr>
-        <th>Listing Name</th>
-        <th>Image</th>
-        <th>Description</th>
-        <th>Final Price</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Owner</th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.Where(l => l.EndTimestamp.Subtract(DateTime.Now).Seconds <= 0))
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="150">
-            </td>
-            <td width="400" style="text-align: justify;">
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @if (item.Bids.Count > 0)
-                {
-                    foreach (var bid in item.Bids.OrderByDescending(l => l.Timestamp).Take(1))
-                    {
-                        @Html.DisplayFor(b => bid.Amount)
-                    }
-                }
-                else
-                {
-                    <text>N/A</text>
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTimestamp)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTimestamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Username)
-            </td>
-            <td width="130"><center>@Html.ActionLink("View Listing", "Details", new { id = item.ListingID }, new { @class = "button" })</center></td>
-        </tr>
-    }
 
 </table>

@@ -2,40 +2,34 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Home_Layout.cshtml";
+
 }
 
-<h2>Create</h2>
+<h2>Register</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>User</legend>
+        <table width="350" align="center">
+            <tr>
+                <td width="15%"><h4>Username</h4></td>
+                <td>
+                    <input id="username" name="username" type="text" placeholder="" class="form-control input-md" required="">
+                </td>
+            </tr>
+            <tr>
+                <td><h4>Password</h4></td>
+                <td>
+                    <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="">
+                </td>
+            </tr>
+        </table>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Username)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Username)
-            @Html.ValidationMessageFor(model => model.Username)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
+        <center>
+            <input type="submit" value="Create" class="button"/>
+        </center>
     </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
